@@ -1,0 +1,44 @@
+<!--
+Busfinder - UK bus stop and route information
+Copyright (C) 2011  Ian Dunlop
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Busfinder</title>
+  <%= stylesheet_link_tag :all %>
+  <%= javascript_include_tag :defaults, "http://maps.google.com/maps/api/js?sensor=false" %>
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div class="main-page" id="doc3">
+<div id="hd">
+<div class="big-text">Manchester busfinder. Find your way home.</div>
+<div class="medium-text">Click on a bus stop to find the routes.  Click on a route to show it on the map.</div>
+<div class="small-text">Note: bus stops are only fetched when the map is less than 3km wide.</div>
+</div>
+<div id="bd">
+<%= yield %>
+</div>
+<div id="ft">
+<div>Local transport provider?  Want to add your own bus data, <a href="mailto:info+ian@thetravellingbard.org.uk?Subject=More%20Info%20Please">
+contact us</a>.  Developer?  Use the <a href="https://github.com/ianwdunlop/busfinder">
+api</a>.</div>
+<div>This is alpha software, use at your own risk. (c) 2011 The Travelling Bard.</div>
+</div>
+</div>
+</body>
+</html>

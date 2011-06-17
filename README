@@ -1,0 +1,32 @@
+== Busfinder
+
+A ruby on rails 3 web application with a JSON API.  Allows users to find information on bus stops, buses and routes and display on a map.  Developers can also use the REST API to fetch info in JSON and use in their own apps.
+
+== Setup
+
+1)git clone git://github.com/ianwdunlop/busfinder.git
+
+2)If you want to parse the data then you need to clone the atco-cif parser from git://github.com/ianwdunlop/atco.git.  This is a fork of another atco gem which adds some extra features.  build it using gem build atco.gemspec and install with gem install atco-0.0.2.gem.  You may have to run your own gem server to pick this one up with gem server.  If you are using RVM then it will install it in the ruby/gemset you are using and there is no need for the gem server.
+
+3)bundle install
+
+The app has rake tasks to parse the bus stop data from Naptan (available from http://data.gov.uk/dataset/naptan) and the GMPTE bus data (from http://datagm.org.uk/).  Most of the UK's bus stops are in the Naptan data and on the live site but only route data for Manchester.  The GMPTE data is in the atco-cif format (with some extra bits they added) so it would be possible to use any transport providers atco data.
+
+== API
+
+The current routes of main interest to developers are bus_stops_by_bounds and routes/id.  bus_stops_by_bounds takes a lat/lng bounding box as arguments passed in the form northeast_lat=nx&northeast_lon=ny&southwest_lat=sx&southwest_lon=sy&type=JSON. This return all the bus stops it finds in the box (maximum size across the diagonal of 3km) in JSON format.  Each bus stop can have several routes that run through it and each of these has an id.  Requesting routes/x?type=JSON brings back the route information.  The route also knows which bus stops it runs through so that you can plot this (as demo'd at http://busfinder.thetravellingbard.org.uk).
+
+== TODO
+Bus stops by range
+Bus stops by location
+General geo-location info
+Search for bus stops/streets
+Time info for stops on a route(the database has all the time information for each bus stop on a route but it is not exposed yet)
+
+== Licence
+
+GPLv3.  If this causes problems for you then contact me at ian -at- thetravellingbard.org.uk and we can discuss.
+
+== Reuse
+
+I have no problem with developers re-using the code etc (with reference to the licence restrictions of course) but if you use the API/data etc then please credit http://thetravellingbard.org.uk in your app
