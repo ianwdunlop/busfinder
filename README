@@ -14,7 +14,7 @@ The app has rake tasks to parse the bus stop data from Naptan (available from ht
 
 == API
 
-The current routes of main interest to developers are bus_stops_by_bounds and routes/id.  bus_stops_by_bounds takes a lat/lng bounding box as arguments passed in the form northeast_lat=nx&northeast_lon=ny&southwest_lat=sx&southwest_lon=sy&type=JSON. This return all the bus stops it finds in the box (maximum size across the diagonal of 3km) in JSON format.  Each bus stop can have several routes that run through it and each of these has an id.  Requesting routes/x?type=JSON brings back the route information.  The route also knows which bus stops it runs through so that you can plot this (as demo'd at http://busfinder.thetravellingbard.org.uk).
+The current routes of main interest to developers are bus_stops_by_bounds and routes/id.  bus_stops_by_bounds takes a lat/lng bounding box as arguments passed in the form northeast_lat=nx&northeast_lon=ny&southwest_lat=sx&southwest_lon=sy&type=JSON. This return all the bus stops it finds in the box (maximum size across the diagonal of 3km) in JSON format.  Each bus stop can have several routes that run through it and each of these has an id.  Requesting routes/x?type=JSON brings back the route information.  The route also knows which bus stops it runs through so that you can plot this (as demo'd at http://busfinder.dyndns.org or http://busfinder.thetravellingbard.org.uk).
 
 == TODO
 Bus stops by range
