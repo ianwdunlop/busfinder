@@ -29,6 +29,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div class="big-text">Manchester busfinder. Find your way home.</div>
 <div class="medium-text">Click on a bus stop to find the routes.  Click on a route to show it on the map.</div>
 <div class="small-text">Note: bus stops are only fetched when the map is less than 3km wide.</div>
+<%#= check_box "geolocate", "follow", :onclick=>"followLocation()"%><!-- Follow my location -->
+<%= button_to_function "Centre map  on my location", "centreLocation()" %>
 </div>
 <div id="bd">
 <%= yield %>

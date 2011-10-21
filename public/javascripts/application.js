@@ -22,6 +22,10 @@ var first_draw = true;
 var draw_new_map = true;
 var bus_stops = new Array();
 var map;
+var trackLocation = false;
+var watchID;
+var geoLoc;
+
 //hash of route id to polylines on the map
 var drawnRoutes = {};
 var directionsService = new google.maps.DirectionsService();
@@ -220,4 +224,41 @@ function RouteControl(controlDiv, map) {
   google.maps.event.addDomListener(controlUI, 'click', function() {
     $('#routes').toggle();
   });
+}
+function centreLocation() {
+	if (navigator.geolocation) {
+		if (geoLoc == null) {
+			geoLoc = navigator.geolocation;
+		}
+		geoLoc.getCurrentPosition(showLocation, errorHandler);
+		trackLocation = true;
+	} else {
+	  alert("Your browser does not support geo-location or you have not allowed it.")
+	}
+}
+function followLocation() {
+	if (trackLocation) {
+		clearWatch(watchID);
+		trackLocation = false;
+	} else if (navigator.geolocation) {
+		var options = {timeout:10000};
+		if (geoLoc == null) {
+			geoLoc = navigator.geolocation;
+		}
+		watchID = geoLoc.watchPosition(showLocation,errorHandler, options);
+		trackLocation = true;
+	} else {
+	  alert("Your browser does not support geo-location or you have not allowed it.")
+	}
+}
+function showLocation(position) {
+  var latitude = position.coords.latitude;
+  var longitude = position.coords.longitude;
+  map.setCenter(new google.maps.LatLng(latitude,longitude))
+}
+function errorHandler(error){
+	//doesn't matter
+}
+function clearWatch(){
+   geoLoc.clearWatch(watchID);
 }
