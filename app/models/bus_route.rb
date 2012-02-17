@@ -14,9 +14,9 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Route < ActiveRecord::Base
+class BusRoute < ActiveRecord::Base
   has_many :z_locations
-  has_many :journeys
+  has_many :bus_journeys
   has_many :bus_stop_routes
   has_many :bus_stops, :through => :bus_stop_routes
   has_many :route_names

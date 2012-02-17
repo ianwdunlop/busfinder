@@ -13,6 +13,7 @@
 
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 var colours = ['red','blue','green','yellow','pink','navy','salmon','tan','plum','orange'];
 var current_ne_lat;
 var current_ne_lon;
@@ -28,7 +29,7 @@ var geoLoc;
 
 //hash of route id to polylines on the map
 var drawnRoutes = {};
-var directionsService = new google.maps.DirectionsService();
+var directionsService;
 
 function drawMap(){
 var latlng = new google.maps.LatLng(53.4, -2.15);
@@ -43,6 +44,7 @@ var routeControl = new RouteControl(routeControlDiv, map);
 
 routeControlDiv.index = 1;
 map.controls[google.maps.ControlPosition.TOP_RIGHT].push(routeControlDiv);
+directionsService = new google.maps.DirectionsService();
 
 google.maps.event.addListener(map, 'idle', function() {
     var bounds = map.getBounds();
@@ -67,19 +69,20 @@ google.maps.event.addListener(map, 'idle', function() {
 			  },
 			 function(data) {
 				$.each(data, function(id){
-					var code = data[id].bus_stop.code;
+					var code = data[id].code;
 					if ($.inArray(code, bus_stops) == -1) {
 					bus_stops.push(code);
-					var lat = data[id].bus_stop.latitude;
-					var lon = data[id].bus_stop.longitude;
-					var name = data[id].bus_stop.name;
-					var locality = data[id].bus_stop.locality;
-					var bearing = data[id].bus_stop.bearing;
+					var lat = data[id].latitude;
+					var lon = data[id].longitude;
+					var name = data[id].name;
+					var locality = data[id].locality;
+					var bearing = data[id].bearing;
 					var busStopLatlng = new google.maps.LatLng(lat,lon);
 					var title = name + ", " + locality;
+					if (data[id].bus_routes.length != 0) {
 					var routes = "<ul>";
-					for (route_id in data[id].bus_stop.routes) {
-						routes = routes + "<li><button style='border:none; background:transparent; cursor: pointer;'onclick='getRouteDetails(" + data[id].bus_stop.routes[route_id].id + ','  + '\"' + data[id].bus_stop.routes[route_id].description  + '\"' + ")'><br/>" + data[id].bus_stop.routes[route_id].route_number + " " + data[id].bus_stop.routes[route_id].description + "</button></li>";
+					for (route_id in data[id].bus_routes) {
+						routes = routes + "<li><button style='border:none; background:transparent; cursor: pointer;'onclick='getRouteDetails(" + data[id].bus_routes[route_id].id + ','  + '\"' + data[id].bus_routes[route_id].description  + '\"' + ")'><br/>" + data[id].bus_routes[route_id].route_number + " " + data[id].bus_routes[route_id].description + "</button></li>";
 					};
 					routes = routes + "</ul>"
 					var marker = new google.maps.Marker({
@@ -93,6 +96,7 @@ google.maps.event.addListener(map, 'idle', function() {
 					google.maps.event.addListener(marker, 'click', function() {
 					  infowindow.open(map,marker);
 					});
+				}
 				};
 				});
 			}).error(function(XMLHttpRequest,textStatus, errorThrown) {	alert(textStatus);
@@ -108,20 +112,20 @@ function getRouteDetails(route_id, route_name) {
 	//only get the route if it does not already exist
 	if (drawnRoutes[route_id] == null) {
 	var stops = new Array();
-	$.getJSON('routes/' + route_id,			  
+	$.getJSON('bus_routes/' + route_id,			  
 			 function(data) {
 				drawnRoutes[route_id] = new Array();
 				//var routeColour = Math.round(0xffffff * Math.random()).toString(16);
 				var routeColour = colours[randomFromTo(0,9)];
 				addCheckbox(route_id, route_name, routeColour);
 				var i = 0;
-				var endPos = data.route.bus_stops.length - 1;
+				var endPos = data.bus_stops.length - 1;
 				//Arrange the bus stops into pairs of lat lngs and get directions
 				for (i= 1; i < endPos ; i++) {
-					var startLat = data.route.bus_stops[i].latitude;
-					var startLon = data.route.bus_stops[i].longitude;
-					var endLat = data.route.bus_stops[i + 1].latitude;
-					var endLon = data.route.bus_stops[i + 1].longitude;
+					var startLat = data.bus_stops[i].latitude;
+					var startLon = data.bus_stops[i].longitude;
+					var endLat = data.bus_stops[i + 1].latitude;
+					var endLon = data.bus_stops[i + 1].longitude;
 					var origin = new google.maps.LatLng(startLat,startLon);
 					var destination = new google.maps.LatLng(endLat,endLon);
 					var request = {

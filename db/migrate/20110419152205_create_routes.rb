@@ -1,6 +1,6 @@
 class CreateRoutes < ActiveRecord::Migration
   def self.up
-    create_table :routes do |t|
+    create_table :bus_routes do |t|
       t.string :route_number
       t.string :description
       t.timestamps
@@ -8,6 +8,6 @@ class CreateRoutes < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :routes
+    drop_table :bus_routes
   end
 end

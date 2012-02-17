@@ -14,7 +14,25 @@
 #You should have received a copy of the GNU General Public License
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-class Journey < ActiveRecord::Base
-  has_many :stops
-  belongs_to :route
+class BusRoutesController < ApplicationController
+  
+    respond_to :html, :xml, :json
+    
+    # all geo stuff handled by bus stops
+  # def by_bounds
+  #   join_string = "INNER JOIN z_locations ON routes.id = z_locations.id"
+  #   query_string = "z_locations.latitude between ? and ? and z_locations.longitude between ? and ?"
+  #   @routes = Route.joins(join_string).where(query_string, params[:southwest_lat], params[:northeast_lat], :params[:southwest_lon], :params[:northeast_lon])
+  #   respond_with @routes
+  # end
+  
+  def show
+    @route = BusRoute.find(params[:id])
+    puts @route.to_json(:include => :bus_stops)
+    respond_with @route
+  end
+  
+  def index
+  end
+  
 end

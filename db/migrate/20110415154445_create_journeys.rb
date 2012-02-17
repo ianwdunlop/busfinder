@@ -1,6 +1,6 @@
 class CreateJourneys < ActiveRecord::Migration
   def self.up
-    create_table :journeys do |t|
+    create_table :bus_journeys do |t|
     t.string :vehicle_type
     t.string :registration_number
     t.string :identifier
@@ -12,7 +12,7 @@ class CreateJourneys < ActiveRecord::Migration
     t.string :school_term_time
     t.string :route_direction
     t.string :bank_holidays
-    t.integer :route_id
+    t.integer :bus_route_id
     t.boolean :mondays
     t.boolean :tuesdays
     t.boolean :wednesdays
@@ -25,6 +25,6 @@ class CreateJourneys < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :journeys
+    drop_table :bus_journeys
   end
 end

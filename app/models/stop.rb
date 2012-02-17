@@ -16,5 +16,5 @@
 
 class Stop < ActiveRecord::Base
   belongs_to :bus_stop
-  belongs_to :journey
+  belongs_to :bus_journey
 end

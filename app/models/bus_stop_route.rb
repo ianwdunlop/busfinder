@@ -15,6 +15,6 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BusStopRoute < ActiveRecord::Base
-  belongs_to :route
+  belongs_to :bus_route
   belongs_to :bus_stop
 end

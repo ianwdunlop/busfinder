@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,8 +13,39 @@
 
 ActiveRecord::Schema.define(:version => 20110502123254) do
 
+  create_table "bus_journeys", :force => true do |t|
+    t.string   "vehicle_type"
+    t.string   "registration_number"
+    t.string   "identifier"
+    t.string   "operator"
+    t.string   "route_number"
+    t.string   "first_date_of_operation"
+    t.string   "running_board"
+    t.string   "last_date_of_operation"
+    t.string   "school_term_time"
+    t.string   "route_direction"
+    t.string   "bank_holidays"
+    t.integer  "bus_route_id"
+    t.boolean  "mondays"
+    t.boolean  "tuesdays"
+    t.boolean  "wednesdays"
+    t.boolean  "thursdays"
+    t.boolean  "fridays"
+    t.boolean  "saturdays"
+    t.boolean  "sundays"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bus_routes", :force => true do |t|
+    t.string   "route_number"
+    t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "bus_stop_routes", :force => true do |t|
-    t.integer  "route_id"
+    t.integer  "bus_route_id"
     t.integer  "bus_stop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -33,39 +65,8 @@ ActiveRecord::Schema.define(:version => 20110502123254) do
     t.datetime "updated_at"
   end
 
-  create_table "journeys", :force => true do |t|
-    t.string   "vehicle_type"
-    t.string   "registration_number"
-    t.string   "identifier"
-    t.string   "operator"
-    t.string   "route_number"
-    t.string   "first_date_of_operation"
-    t.string   "running_board"
-    t.string   "last_date_of_operation"
-    t.string   "school_term_time"
-    t.string   "route_direction"
-    t.string   "bank_holidays"
-    t.integer  "route_id"
-    t.boolean  "mondays"
-    t.boolean  "tuesdays"
-    t.boolean  "wednesdays"
-    t.boolean  "thursdays"
-    t.boolean  "fridays"
-    t.boolean  "saturdays"
-    t.boolean  "sundays"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "routes", :force => true do |t|
-    t.string   "route_number"
-    t.string   "description"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "stops", :force => true do |t|
-    t.integer  "journey_id"
+    t.integer  "bus_journey_id"
     t.string   "code"
     t.string   "bay_number"
     t.string   "timing_point"
@@ -82,12 +83,12 @@ ActiveRecord::Schema.define(:version => 20110502123254) do
   create_table "z_locations", :force => true do |t|
     t.string   "code"
     t.string   "name"
-    t.integer  "route_id"
+    t.integer  "bus_route_id"
     t.integer  "bus_stop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "latitude",    :precision => 15, :scale => 10
-    t.decimal  "longitude",   :precision => 15, :scale => 10
+    t.decimal  "latitude",     :precision => 15, :scale => 10
+    t.decimal  "longitude",    :precision => 15, :scale => 10
   end
 
 end

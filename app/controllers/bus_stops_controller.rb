@@ -22,7 +22,6 @@ class BusStopsController < ApplicationController
   #If the area requested is greater than 3km then do nothing
   def by_bounds
     distance = distance_between(params[:northeast_lat], params[:southwest_lat], params[:northeast_lon], params[:southwest_lon])
-    puts 'distance is  ' + distance.to_s
     if distance < 3
       sw = GeoKit::LatLng.new(params[:southwest_lat], params[:southwest_lon])
       ne = GeoKit::LatLng.new(params[:northeast_lat], params[:northeast_lon])

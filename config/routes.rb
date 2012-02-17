@@ -1,14 +1,14 @@
 Busfinder::Application.routes.draw do
   
-  resources :journeys
+  resources :bus_journeys
   
   get 'welcome/json'
   
-  get 'routes/by_bounds'
+  get 'bus_routes/by_bounds'
   
   get 'bus_stops/by_bounds'
   
-  match 'routes/:id' => 'routes#show'
+  match 'bus_routes/:id' => 'bus_routes#show'
   
   root :to => "welcome#index"
   # The priority is based upon order of creation:
