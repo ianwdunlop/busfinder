@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110502123254) do
+ActiveRecord::Schema.define(:version => 20120219015924) do
 
   create_table "bus_journeys", :force => true do |t|
     t.string   "vehicle_type"
