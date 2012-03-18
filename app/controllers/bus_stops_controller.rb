@@ -18,6 +18,10 @@ class BusStopsController < ApplicationController
   
   respond_to :html, :xml, :json
   
+  def show
+    @bus_stop = BusStop.find(params[:id])  
+  end
+  
   #Calculate the bus stops that appear in a bounding box and send back to client.
   #If the area requested is greater than 3km then do nothing
   def by_bounds
@@ -25,7 +29,7 @@ class BusStopsController < ApplicationController
     if distance < 3
       sw = GeoKit::LatLng.new(params[:southwest_lat], params[:southwest_lon])
       ne = GeoKit::LatLng.new(params[:northeast_lat], params[:northeast_lon])
-      @bus_stops = BusStop.geo_scope(:bounds => [sw,ne])
+      @bus_stops = BusStop.joins(:bus_routes).where(:bus_routes != nil).geo_scope(:bounds => [sw,ne])
     
       respond_with @bus_stops
       #should be an else that sends a helpful message like 'distance too big'

@@ -79,24 +79,15 @@ google.maps.event.addListener(map, 'idle', function() {
 					var bearing = data[id].bearing;
 					var busStopLatlng = new google.maps.LatLng(lat,lon);
 					var title = name + ", " + locality;
-					if (data[id].bus_routes.length != 0) {
-					var routes = "<ul>";
-					for (route_id in data[id].bus_routes) {
-						routes = routes + "<li><button style='border:none; background:transparent; cursor: pointer;'onclick='getRouteDetails(" + data[id].bus_routes[route_id].id + ','  + '\"' + data[id].bus_routes[route_id].description  + '\"' + ")'><br/>" + data[id].bus_routes[route_id].route_number + " " + data[id].bus_routes[route_id].description + "</button></li>";
-					};
-					routes = routes + "</ul>"
 					var marker = new google.maps.Marker({
 					      position: busStopLatlng, 
 					      map: map, 
 					      title:title
 					  });
-					var infowindow = new google.maps.InfoWindow({
-					    content: "<h3>" + title + "</h3><h2>Click on a route to display on the map</h2>" + routes
-					});
 					google.maps.event.addListener(marker, 'click', function() {
-					  infowindow.open(map,marker);
+					  retrieveRouteDetails(code, marker);
 					});
-				}
+				//}
 				};
 				});
 			}).error(function(XMLHttpRequest,textStatus, errorThrown) {	alert(textStatus);
@@ -265,4 +256,23 @@ function errorHandler(error){
 }
 function clearWatch(){
    geoLoc.clearWatch(watchID);
+}
+
+function retrieveRouteDetails(bus_stop_id, marker) {
+	$.getJSON('bus_stops/' + bus_stop_id,
+	{},
+	function(data) {
+		var routes = "<ul>";
+		for (route_id in data[id].bus_routes) {
+			routes = routes + "<li><button style='border:none; background:transparent; cursor: pointer;'onclick='getRouteDetails(" + data[id].bus_routes[route_id].id + ','  + '\"' + data[id].bus_routes[route_id].description  + '\"' + ")'><br/>" + data[id].bus_routes[route_id].route_number + " " + data[id].bus_routes[route_id].description + "</button></li>";
+		};
+		routes = routes + "</ul>";
+		var infowindow = new google.maps.InfoWindow({
+		    content: "<h3>" + title + "</h3><h2>Click on a route to display on the map</h2>" + routes
+		});
+		google.maps.event.addListener(marker, 'click', function() {
+		  infowindow.open(map,marker);
+		});
+	}
+    );
 }
