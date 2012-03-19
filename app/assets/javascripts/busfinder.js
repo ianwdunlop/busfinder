@@ -270,9 +270,7 @@ function retrieveRouteDetails(bus_stop_id, marker) {
 		var infowindow = new google.maps.InfoWindow({
 		    content: "<h3>" + marker.title + "</h3><h2>Click on a route to display on the map</h2>" + routes
 		});
-		//google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.open(map,marker);
-		//});
 	}
     );
 }
