@@ -10,6 +10,8 @@ Busfinder::Application.routes.draw do
   
   match 'bus_routes/:id' => 'bus_routes#show'
   
+  match 'bus_stops/:id' => 'bus_stops#show'
+  
   root :to => "welcome#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.

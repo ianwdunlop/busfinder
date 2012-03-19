@@ -85,7 +85,7 @@ google.maps.event.addListener(map, 'idle', function() {
 					      title:title
 					  });
 					google.maps.event.addListener(marker, 'click', function() {
-					  retrieveRouteDetails(code, marker);
+					  retrieveRouteDetails(data[id].id, marker);
 					});
 				//}
 				};
@@ -263,16 +263,16 @@ function retrieveRouteDetails(bus_stop_id, marker) {
 	{},
 	function(data) {
 		var routes = "<ul>";
-		for (route_id in data[id].bus_routes) {
-			routes = routes + "<li><button style='border:none; background:transparent; cursor: pointer;'onclick='getRouteDetails(" + data[id].bus_routes[route_id].id + ','  + '\"' + data[id].bus_routes[route_id].description  + '\"' + ")'><br/>" + data[id].bus_routes[route_id].route_number + " " + data[id].bus_routes[route_id].description + "</button></li>";
+		for (route_id in data.bus_routes) {
+			routes = routes + "<li><button style='border:none; background:transparent; cursor: pointer;'onclick='getRouteDetails(" + data.bus_routes[route_id].id + ','  + '\"' + data.bus_routes[route_id].description  + '\"' + ")'><br/>" + data.bus_routes[route_id].route_number + " " + data.bus_routes[route_id].description + "</button></li>";
 		};
 		routes = routes + "</ul>";
 		var infowindow = new google.maps.InfoWindow({
-		    content: "<h3>" + title + "</h3><h2>Click on a route to display on the map</h2>" + routes
+		    content: "<h3>" + marker.title + "</h3><h2>Click on a route to display on the map</h2>" + routes
 		});
-		google.maps.event.addListener(marker, 'click', function() {
+		//google.maps.event.addListener(marker, 'click', function() {
 		  infowindow.open(map,marker);
-		});
+		//});
 	}
     );
 }
